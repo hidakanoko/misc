@@ -30,6 +30,9 @@ class OpenCVImageDetector:
 	def detectAndSaveObject(self, imgPath, dest):
 		print("INFO: Detcting object in " + imgPath)
 		img = self._loadImage(imgPath)
+		if img is None:
+			print("WARN: Cannot load image file from " + imgPath + ", skip")
+			return
 		objects = self.detectObjects(img)
 		count = 0
 		for (x, y, w, h) in objects:

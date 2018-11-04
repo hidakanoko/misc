@@ -12,7 +12,7 @@ def handle_args():
 		prog='ImageCollector',
 		description='Collect images searched by Google and optionally detect faces.')
 
-	parser.add_argument('-k', '--keywords', type=str, action='append', required=True)
+	parser.add_argument('-k', '--keywords', type=str, action='append', required=False)
 	parser.add_argument('-d', '--dest', type=str, default='/tmp/')
 	parser.add_argument('-s', '--skipDownload', action='store_const', const=True, default=False)
 	parser.add_argument('-o', '--detectObject', action='store_const', const=True, default=False)
@@ -49,8 +49,11 @@ args = handle_args()
 if not args.skipDownload:
 	downloader = getDownloader(args)
 	downloader.doDownload(args.keywords)
+else:
+	print("INFO: Skipping images download")
 
 if args.detectObject:
+	print("INFO: Detecting object in " + args.dest)
 	detector = getObjectDetector(args)
 	for dir in os.listdir(args.dest):
 		dirpath = os.path.join(args.dest, dir)
